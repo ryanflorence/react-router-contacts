@@ -168,7 +168,7 @@ form[action$="destroy"] button {
   animation: spin 1s infinite linear;
   position: absolute;
   left: 0.625rem;
-  top: 0.625rem;
+  top: 0.75rem;
 }
 
 @keyframes spin {
