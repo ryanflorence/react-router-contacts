@@ -1,0 +1,223 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+#root {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+#sidebar {
+  width: 20rem;
+  border-right: solid 1px #ccc;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 0;
+}
+
+#sidebar > * {
+  padding: 0 2rem;
+}
+
+#sidebar nav {
+  flex: 1;
+  overflow: auto;
+  margin: 1.5rem 0;
+}
+
+#sidebar input[type="search"] {
+  font-size: inherit;
+  border: none;
+  border-radius: 4px;
+  width: 100%;
+  padding: 0.5rem 0.75rem 0.5rem 2rem;
+  box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.2), 0 1px 2px hsla(0, 0%, 0%, 0.2);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z' /%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: left 0.5rem center;
+  background-size: 1rem;
+  display: inline-block;
+  position: relative;
+}
+
+#sidebar input[type="search"].loading {
+  background-image: none;
+}
+
+#sidebar form {
+  position: relative;
+}
+
+#search-spinner {
+  width: 1rem;
+  height: 1rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'%3E%3Cpath stroke='%23000' strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M20 4v5h-.582m0 0a8.001 8.001 0 00-15.356 2m15.356-2H15M4 20v-5h.581m0 0a8.003 8.003 0 0015.357-2M4.581 15H9' /%3E%3C/svg%3E");
+  animation: spin 1s infinite linear;
+  position: absolute;
+  left: 2.5rem;
+  top: calc(50% - 0.5rem);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+button {
+  font-size: inherit;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.2), 0 1px 2px hsla(0, 0%, 0%, 0.2);
+  background-color: white;
+  font-size: 85%;
+}
+
+button:hover {
+  box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.6), 0 1px 2px hsla(0, 0%, 0%, 0.2);
+}
+
+button:active {
+  box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.4);
+  transform: translateY(1px);
+}
+
+#new-contact-button {
+  float: right; /* lol I had to */
+  padding-left: 1.75rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M12 4v16m8-8H4' /%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 1rem;
+  background-position: left 0.5rem center;
+}
+
+#sidebar ul {
+  padding: 0;
+  list-style: none;
+}
+
+#sidebar li {
+  margin: 0.25rem 0;
+}
+
+#sidebar nav a {
+  display: block;
+  padding: 0.5rem;
+  border-radius: 4px;
+  color: inherit;
+  text-decoration: none;
+}
+
+#sidebar nav a:hover {
+  background: #eee;
+}
+
+#sidebar nav a.active {
+  background: hsl(224, 98%, 58%);
+  color: white;
+}
+
+#sidebar nav a.pending {
+  color: hsl(224, 98%, 58%);
+}
+
+#detail {
+  flex: 1;
+  padding: 2rem;
+  width: 100%;
+}
+
+#detail.loading {
+  opacity: 0.25;
+  transition: opacity 200ms;
+  transition-delay: 200ms;
+}
+
+#contact {
+  max-width: 40rem;
+  margin: auto;
+  display: flex;
+}
+
+#contact h1 {
+  margin-top: 0;
+}
+
+#contact h1:focus {
+  outline: none;
+  color: hsl(224, 98%, 58%);
+}
+
+#contact img {
+  width: 12rem;
+  height: 12rem;
+  background: hsla(0, 0%, 0%, 0.2);
+  margin-right: 2rem;
+  border-radius: 1rem;
+}
+
+#contact-actions {
+  display: flex;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+#contact-form {
+  display: flex;
+  max-width: 40rem;
+  margin: auto;
+}
+
+#contact-form-avatar {
+  margin-right: 2rem;
+}
+
+#contact-form-avatar img {
+  width: 12rem;
+  height: 12rem;
+  background: hsla(0, 0%, 0%, 0.2);
+  border-radius: 1rem;
+}
+
+#contact-form-avatar input {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+#edit-actions {
+  display: flex;
+  gap: 1rem;
+}
