@@ -54,7 +54,7 @@ export default function Root() {
           <Form
             id="search-form"
             role="search"
-            onSubmit={(event) => {
+            onSubmit={event => {
               if (firstContact) {
                 navigate(`/contacts/${firstContact.id}`, {
                   replace: true,
@@ -67,7 +67,7 @@ export default function Root() {
             <input
               id="q"
               className={searching ? "loading" : ""}
-              onChange={(event) => {
+              onChange={event => {
                 submit(event.currentTarget.form, {
                   replace: q != null,
                 });
@@ -89,7 +89,7 @@ export default function Root() {
         </div>
         <nav>
           <ul>
-            {contacts.map((contact) => (
+            {contacts.map(contact => (
               <li key={contact.id}>
                 <NavLink
                   className={({ isActive, isPending }) =>
@@ -100,12 +100,12 @@ export default function Root() {
                 >
                   {contact.first || contact.last ? (
                     <>
-                      {contact.first} {contact.last}{" "}
-                      {contact.favorite && <span>★</span>}
+                      {contact.first} {contact.last}
                     </>
                   ) : (
                     <i>No Name</i>
-                  )}
+                  )}{" "}
+                  {contact.favorite && <span>★</span>}
                 </NavLink>
               </li>
             ))}
