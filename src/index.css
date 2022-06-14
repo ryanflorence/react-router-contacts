@@ -194,7 +194,7 @@ form[action$="destroy"] button {
   color: inherit;
 }
 
-#sidebar nav i {
+i {
   color: #818181;
 }
 #sidebar nav .active i {
@@ -354,7 +354,7 @@ form[action$="destroy"] button {
 }
 
 #zero-state {
-  margin: 0 auto;
+  margin: 2rem auto;
   text-align: center;
   color: #818181;
 }

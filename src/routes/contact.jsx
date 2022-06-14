@@ -36,7 +36,14 @@ export function Contact({ contact }) {
 
       <div>
         <h1 ref={headingRef} tabIndex="-1">
-          {contact.first} {contact.last} <Favorite contact={contact} />
+          {contact.first || contact.last ? (
+            <>
+              {contact.first} {contact.last}
+            </>
+          ) : (
+            <i>No Name</i>
+          )}{" "}
+          <Favorite contact={contact} />
         </h1>
 
         {contact.twitter && (
@@ -56,7 +63,7 @@ export function Contact({ contact }) {
           <Form
             method="post"
             action="destroy"
-            onSubmit={(event) => {
+            onSubmit={event => {
               if (!confirm("Please confirm you want to delete this record.")) {
                 event.preventDefault();
               }

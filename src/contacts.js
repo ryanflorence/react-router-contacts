@@ -12,11 +12,13 @@ import sortBy from "sort-by";
 //     twitter: "@mjackson",
 //     avatar:
 //       "https://pbs.twimg.com/profile_images/1529950053317505024/D2kf-q6Q_400x400.jpg",
+//     favorite: false,
+//     notes: "heyooo"
 //   },
 // ];
 
 export async function getContacts(query) {
-  await fakeNetwork();
+  await fakeNetwork(`getContacts:${query}`);
   let contacts = await localforage.getItem("contacts");
   if (!contacts) contacts = [];
   if (query) {
@@ -36,13 +38,14 @@ export async function createContact() {
 }
 
 export async function getContact(id) {
-  await fakeNetwork();
+  await fakeNetwork(`contact:${id}`);
   let contacts = await localforage.getItem("contacts");
   let contact = contacts.find(contact => contact.id === id);
   return contact ?? null;
 }
 
 export async function updateContact(id, updates) {
+  await fakeNetwork();
   let contacts = await localforage.getItem("contacts");
   let contact = contacts.find(contact => contact.id === id);
   if (!contact) throw new Error("No contact found for", id);
@@ -66,7 +69,19 @@ function set(contacts) {
   return localforage.setItem("contacts", contacts);
 }
 
-async function fakeNetwork() {
+// fake a cache so we don't slow down stuff we've already seen
+let fakeCache = {};
+
+async function fakeNetwork(key) {
+  if (!key) {
+    fakeCache = {};
+  }
+
+  if (fakeCache[key]) {
+    return;
+  }
+
+  fakeCache[key] = true;
   return new Promise(res => {
     setTimeout(res, Math.random() * 800);
   });
