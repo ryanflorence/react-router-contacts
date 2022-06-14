@@ -47,43 +47,49 @@ export default function Root() {
   }, [q]);
 
   return (
-    <div id="root">
+    <>
       <div id="sidebar">
-        <Form
-          id="search-form"
-          role="search"
-          onSubmit={event => {
-            if (firstContact) {
-              navigate(`/contacts/${firstContact.id}`, {
-                replace: true,
-                state: { takeFocus: true },
-              });
-              event.preventDefault();
-            }
-          }}
-        >
-          <input
-            id="q"
-            className={searching ? "loading" : ""}
-            onChange={event => {
-              submit(event.currentTarget.form, {
-                replace: q != null,
-              });
+        <h1>React Router Contacts</h1>
+        <div>
+          <Form
+            id="search-form"
+            role="search"
+            onSubmit={(event) => {
+              if (firstContact) {
+                navigate(`/contacts/${firstContact.id}`, {
+                  replace: true,
+                  state: { takeFocus: true },
+                });
+                event.preventDefault();
+              }
             }}
-            aria-label="Search contacts"
-            placeholder="Search"
-            type="search"
-            name="q"
-            defaultValue={q}
-          />
-          <div id="search-spinner" aria-hidden="polite" hidden={!searching} />
-          <div className="sr-only" aria-live="polite">
-            {q ? `${contacts.length} results for ${q}` : ""}
-          </div>
-        </Form>
+          >
+            <input
+              id="q"
+              className={searching ? "loading" : ""}
+              onChange={(event) => {
+                submit(event.currentTarget.form, {
+                  replace: q != null,
+                });
+              }}
+              aria-label="Search contacts"
+              placeholder="Search"
+              type="search"
+              name="q"
+              defaultValue={q}
+            />
+            <div id="search-spinner" aria-hidden="polite" hidden={!searching} />
+            <div className="sr-only" aria-live="polite">
+              {q ? `${contacts.length} results for ${q}` : ""}
+            </div>
+          </Form>
+          <Form method="post">
+            <button type="submit">New</button>
+          </Form>
+        </div>
         <nav>
           <ul>
-            {contacts.map(contact => (
+            {contacts.map((contact) => (
               <li key={contact.id}>
                 <NavLink
                   className={({ isActive, isPending }) =>
@@ -94,7 +100,8 @@ export default function Root() {
                 >
                   {contact.first || contact.last ? (
                     <>
-                      {contact.first} {contact.last} {contact.favorite && "★"}
+                      {contact.first} {contact.last}{" "}
+                      {contact.favorite && <span>★</span>}
                     </>
                   ) : (
                     <i>No Name</i>
@@ -104,15 +111,10 @@ export default function Root() {
             ))}
           </ul>
         </nav>
-        <Form method="post" id="new-contact-form">
-          <button type="submit" id="new-contact-button">
-            New Contact
-          </button>
-        </Form>
       </div>
       <div id="detail" className={navigation.state !== "idle" ? "loading" : ""}>
         {firstContact ? <Contact contact={firstContact} /> : <Outlet />}
       </div>
-    </div>
+    </>
   );
 }
