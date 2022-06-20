@@ -32,14 +32,13 @@ export default function Root() {
   const navigate = useNavigate();
   const navigation = useNavigation();
 
-  const searching =
-    navigation.state === "loading" &&
-    navigation.location.search.startsWith("?q");
+  const searching = navigation.location
+    ? new URLSearchParams(navigation.location.search).has("q")
+    : false;
 
   useEffect(() => {
     let searchInput = document.getElementById("q");
     if (q && !searchInput.value) {
-      // only update it if it's empty
       searchInput.value = q;
     } else if (!q) {
       searchInput.value = "";
@@ -68,8 +67,9 @@ export default function Root() {
               id="q"
               className={searching ? "loading" : ""}
               onChange={event => {
+                let isFirstSearch = q == null;
                 submit(event.currentTarget.form, {
-                  replace: q != null,
+                  replace: !isFirstSearch,
                 });
               }}
               aria-label="Search contacts"

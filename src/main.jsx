@@ -23,19 +23,21 @@ createRoot(document.getElementById("root")).render(
         loader={rootLoader}
         action={rootAction}
       >
+        <Route path="contacts/:contactId">
+          <Route
+            index
+            element={<Contact />}
+            loader={contactLoader}
+            action={contactAction}
+          />
+          <Route
+            path="edit"
+            element={<Edit />}
+            loader={contactLoader}
+            action={editAction}
+          />
+        </Route>
         <Route index element={<Index />} />
-        <Route
-          path="contacts/:contactId"
-          element={<Contact />}
-          loader={contactLoader}
-          action={contactAction}
-        />
-        <Route
-          path="contacts/:contactId/edit"
-          element={<Edit />}
-          loader={contactLoader}
-          action={editAction}
-        />
         <Route path="contacts/:contactId/destroy" action={destroyAction} />
       </Route>
       <Route path="*" element={<div>Not found</div>} />

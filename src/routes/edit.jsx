@@ -71,16 +71,21 @@ export default function Edit() {
       <p>
         <button type="submit">Save</button>
 
-        {location.key !== "default" && (
-          <button
-            type="button"
-            onClick={() => {
+        <button
+          type="button"
+          onClick={() => {
+            if (location.key === "default") {
+              navigate("..", {
+                replace: true,
+                relative: "pathname",
+              });
+            } else {
               navigate(-1);
-            }}
-          >
-            Cancel
-          </button>
-        )}
+            }
+          }}
+        >
+          Cancel
+        </button>
       </p>
     </Form>
   );
