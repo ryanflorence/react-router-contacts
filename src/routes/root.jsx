@@ -96,7 +96,7 @@ export default function Root() {
                     isActive ? "active" : isPending ? "pending" : ""
                   }
                   to={`contacts/${contact.id}`}
-                  replace={Boolean(q)}
+                  replace={q != null}
                 >
                   {contact.first || contact.last ? (
                     <>
