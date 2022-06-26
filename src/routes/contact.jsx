@@ -1,15 +1,21 @@
 import { useEffect, useRef } from "react";
 import { Form, useFetcher, useLoaderData, useLocation } from "react-router-dom";
-import { getContact, updateContact } from "../contacts";
 
 export function loader({ params }) {
-  return getContact(params.contactId);
+  return fetch(`/contacts/${params.contactId}`);
 }
 
 export async function action({ request, params }) {
   let formData = await request.formData();
-  return updateContact(params.contactId, {
-    favorite: formData.get("favorite") === "true" ? true : false,
+
+  return await fetch(`/contacts/${params.contactId}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      favorite: formData.get("favorite") === "true" ? true : false,
+    }),
   });
 }
 
@@ -63,7 +69,7 @@ export function Contact({ contact }) {
           <Form
             method="post"
             action="destroy"
-            onSubmit={event => {
+            onSubmit={(event) => {
               if (!confirm("Please confirm you want to delete this record.")) {
                 event.preventDefault();
               }
