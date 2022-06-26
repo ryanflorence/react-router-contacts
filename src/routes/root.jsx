@@ -1,23 +1,17 @@
 import { useEffect } from "react";
-import {
-  redirect,
-  useNavigate,
-  useNavigation,
-  useSubmit,
-} from "react-router-dom";
+import { useNavigate, useNavigation, useSubmit } from "react-router-dom";
 import { Form, NavLink, Outlet, useLoaderData } from "react-router-dom";
-import { createContact, getContacts } from "../contacts";
 import { Contact } from "./contact";
 
-export async function action() {
-  let contact = await createContact();
-  return redirect(`/contacts/${contact.id}/edit`);
-}
-
 export async function loader({ request }) {
-  const url = new URL(request.url);
-  const q = url.searchParams.get("q");
-  const contacts = await getContacts(q);
+  let url = new URL(request.url);
+
+  let q = url.searchParams.get("q");
+
+  let contacts = await fetch("/contacts?" + url.searchParams).then((res) =>
+    res.json()
+  );
+
   return {
     contacts,
     q,
@@ -53,7 +47,7 @@ export default function Root() {
           <Form
             id="search-form"
             role="search"
-            onSubmit={event => {
+            onSubmit={(event) => {
               if (firstContact) {
                 navigate(`/contacts/${firstContact.id}`, {
                   replace: true,
@@ -66,7 +60,7 @@ export default function Root() {
             <input
               id="q"
               className={searching ? "loading" : ""}
-              onChange={event => {
+              onChange={(event) => {
                 let isFirstSearch = q == null;
                 submit(event.currentTarget.form, {
                   replace: !isFirstSearch,
@@ -83,13 +77,11 @@ export default function Root() {
               {q ? `${contacts.length} results for ${q}` : ""}
             </div>
           </Form>
-          <Form method="post">
-            <button type="submit">New</button>
-          </Form>
+          <button onClick={() => navigate("/contacts/new")}>New</button>
         </div>
         <nav>
           <ul>
-            {contacts.map(contact => (
+            {contacts.map((contact) => (
               <li key={contact.id}>
                 <NavLink
                   className={({ isActive, isPending }) =>
