@@ -46,7 +46,7 @@ export const handlers = [
 
     return res(ctx.status(201), ctx.json(contact));
   }),
-  rest.patch("/contacts/:id", (req, res, ctx) => {
+  rest.post("/contacts/:id", (req, res, ctx) => {
     let contact = db.contact.update({
       where: {
         id: { equals: req.params.id },

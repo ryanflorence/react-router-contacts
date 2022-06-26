@@ -6,7 +6,7 @@ export async function action({ request, params }) {
   const updates = Object.fromEntries(formData);
 
   await fetch(`/contacts/${params.contactId}`, {
-    method: "PATCH",
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
